@@ -1,6 +1,6 @@
-const withoutPropagation = (fn: (e: Event) => void) => (e: Event): void => {
+const withoutPropagation = (handler: (e: Event) => void) => (e: Event): void => {
   e.stopPropagation()
-  return fn(e)
+  return handler(e)
 }
 
 export default withoutPropagation

@@ -1,4 +1,5 @@
 import test from 'ava'
+import * as sinon from 'sinon'
 import * as Window from 'window'
 import withoutPropagation from '../source'
 
@@ -7,23 +8,16 @@ test('stops propagation', t => {
 
   const div = window.document.createElement('div')
   const button = window.document.createElement('button')
-  const p = window.document.createElement('p')
-
   div.append(button)
-  div.append(p)
 
-  div.addEventListener('click', () => {
-    p.textContent = 'click on div'
-  })
+  const divClickSpy = sinon.spy()
+  const buttonClickSpy = sinon.spy()
 
-  button.addEventListener(
-    'click',
-    withoutPropagation(() => {
-      p.textContent = 'click on button'
-    })
-  )
+  div.addEventListener('click', divClickSpy)
+  button.addEventListener('click', withoutPropagation(buttonClickSpy))
 
   button.click()
 
-  t.is(p.textContent, 'click on button')
+  t.true(buttonClickSpy.calledOnce)
+  t.true(divClickSpy.notCalled)
 })
