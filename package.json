@@ -21,7 +21,7 @@
   "unpkg": "dist/browser/index.js",
   "module": "dist/esm/index.js",
   "source": "source/index.ts",
-  "browser": "dist/browser/strunit.min.js",
+  "browser": "dist/browser/without-propagation.js",
   "types": "dist/cjs/index.d.ts",
   "scripts": {
     "prebuild": "del dist",
@@ -29,6 +29,7 @@
     "build:browser": "del dist/browser && rollup -c rollup.config.ts && size-limit",
     "build:cjs": "del dist/csj && tsc --outDir dist/cjs",
     "build:esm": "del dist/esm && tsc -m es6 --outDir dist/esm",
+    "prepublishOnly": "npm run test && npm run build",
     "test": "ava"
   },
   "husky": {
