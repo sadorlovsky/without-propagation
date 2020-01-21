@@ -1,10 +1,10 @@
 import test from 'ava'
-import * as sinon from 'sinon'
-import * as Window from 'window'
+import sinon from 'sinon'
+import { JSDOM } from 'jsdom'
 import withoutPropagation from '../source'
 
 test('stops propagation', t => {
-  const window = new Window()
+  const { window } = new JSDOM()
 
   const div = window.document.createElement('div')
   const button = window.document.createElement('button')

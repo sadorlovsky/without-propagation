@@ -6,7 +6,7 @@
     "event",
     "propagation"
   ],
-  "repository": "github:sadorlovsky/without-propagation",
+  "repository": "sadorlovsky/without-propagation",
   "license": "MIT",
   "author": {
     "name": "Zach Orlovsky",
@@ -16,14 +16,20 @@
   "files": [
     "dist"
   ],
-  "main": "dist/module/index.js",
+  "sideEffects": false,
+  "main": "dist/cjs/index.js",
   "unpkg": "dist/browser/index.js",
-  "module": "dist/module/index.js",
+  "module": "dist/esm/index.js",
   "source": "source/index.ts",
-  "browser": "dist/browser/index.js",
+  "browser": "dist/browser/strunit.min.js",
+  "types": "dist/cjs/index.d.ts",
   "scripts": {
-    "build": "parcel build source/index.ts",
-    "test": "tsc --noEmit && xo && ava"
+    "prebuild": "del dist",
+    "build": "npm run build:cjs && npm run build:esm && npm run build:browser",
+    "build:browser": "del dist/browser && rollup -c rollup.config.ts && size-limit",
+    "build:cjs": "del dist/csj && tsc --outDir dist/cjs",
+    "build:esm": "del dist/esm && tsc -m es6 --outDir dist/esm",
+    "test": "ava"
   },
   "husky": {
     "hooks": {
@@ -32,24 +38,8 @@
     }
   },
   "lint-staged": {
-    "*.ts": "xo --fix",
+    "*.ts": "eslint --fix",
     "package.json": "sort-package-json"
-  },
-  "xo": {
-    "extends": "xo-typescript",
-    "extensions": [
-      "ts"
-    ],
-    "rules": {
-      "@typescript-eslint/indent": [
-        "error",
-        2
-      ],
-      "@typescript-eslint/semi": [
-        "error",
-        "never"
-      ]
-    }
   },
   "ava": {
     "babel": false,
@@ -62,19 +52,37 @@
     ]
   },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^2.1.0",
+    "@size-limit/preset-small-lib": "^3.0.0",
+    "@types/jsdom": "^12.2.4",
     "@types/sinon": "^7.5.1",
     "@typescript-eslint/eslint-plugin": "^2.11.0",
     "@typescript-eslint/parser": "^2.11.0",
     "ava": "^2.4.0",
-    "eslint-config-xo-typescript": "^0.23.0",
+    "decamelize": "^3.2.0",
+    "del-cli": "^3.0.0",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "husky": "^3.1.0",
+    "jsdom": "^16.0.1",
     "lint-staged": "^10.0.0-beta.7",
-    "parcel": "^2.0.0-alpha.3.2",
+    "rollup": "^1.29.1",
+    "rollup-plugin-terser": "^5.2.0",
+    "sinon": "^8.1.0",
     "sort-package-json": "^1.32.2",
     "standard": "^14.3.1",
     "ts-node": "^8.5.4",
-    "typescript": "^3.7.3",
-    "window": "^4.2.6",
-    "xo": "^0.25.3"
-  }
+    "typescript": "^3.7.3"
+  },
+  "size-limit": [
+    {
+      "path": "dist/browser/without-propagation.min.js",
+      "limit": "102 B",
+      "webpack": false
+    }
+  ]
 }
