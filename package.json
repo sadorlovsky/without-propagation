@@ -1,6 +1,6 @@
 {
   "name": "without-propagation",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Stops event propagation",
   "keywords": [
     "event",
@@ -18,7 +18,7 @@
   ],
   "sideEffects": false,
   "main": "dist/cjs/index.js",
-  "unpkg": "dist/browser/index.js",
+  "unpkg": "dist/browser/without-propagation.min.js",
   "module": "dist/esm/index.js",
   "source": "source/index.ts",
   "browser": "dist/browser/without-propagation.js",
