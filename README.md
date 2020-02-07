@@ -1,4 +1,4 @@
-# without-propagation
+# without-propagation [![build](https://github.com/sadorlovsky/without-propagation/workflows/build/badge.svg)](#without-propagation) [![codecov](https://codecov.io/gh/sadorlovsky/without-propagation/branch/master/graph/badge.svg)](https://codecov.io/gh/sadorlovsky/without-propagation)
 
 ## You don't want a propagation, right?
 
