@@ -29,8 +29,9 @@
     "build:browser": "del dist/browser && rollup -c rollup.config.ts && size-limit",
     "build:cjs": "del dist/csj && tsc --outDir dist/cjs",
     "build:esm": "del dist/esm && tsc -m es6 --outDir dist/esm",
+    "lint": "eslint source/**/*.ts test/**/*.ts",
     "prepublishOnly": "npm run test && npm run build",
-    "test": "ava"
+    "test": "npm run lint && nyc ava"
   },
   "husky": {
     "hooks": {
@@ -43,8 +44,6 @@
     "package.json": "sort-package-json"
   },
   "ava": {
-    "babel": false,
-    "compileEnhancements": false,
     "extensions": [
       "ts"
     ],
@@ -52,14 +51,29 @@
       "ts-node/register"
     ]
   },
+  "nyc": {
+    "all": true,
+    "branches": 100,
+    "check-coverage": true,
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "functions": 100,
+    "include": [
+      "source"
+    ],
+    "reporter": [
+      "lcovonly",
+      "text"
+    ]
+  },
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@rollup/plugin-typescript": "^2.1.0",
     "@size-limit/preset-small-lib": "^3.0.0",
     "@types/jsdom": "^12.2.4",
     "@types/sinon": "^7.5.1",
     "@typescript-eslint/eslint-plugin": "^2.11.0",
     "@typescript-eslint/parser": "^2.11.0",
-    "ava": "^2.4.0",
+    "ava": "^3.1.0",
     "decamelize": "^3.2.0",
     "del-cli": "^3.0.0",
     "eslint": "^6.8.0",
@@ -71,6 +85,7 @@
     "husky": "^3.1.0",
     "jsdom": "^16.0.1",
     "lint-staged": "^10.0.0-beta.7",
+    "nyc": "^15.0.0",
     "rollup": "^1.29.1",
     "rollup-plugin-terser": "^5.2.0",
     "sinon": "^8.1.0",
