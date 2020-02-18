@@ -12,11 +12,11 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12
-    - name: yarn install, build, and test
+    - name: yarn install, test and build
       run: |
         yarn install --frozen-lockfile
-        yarn build
         yarn test
+        yarn build
       env:
         CI: true
     - uses: codecov/codecov-action@v1
