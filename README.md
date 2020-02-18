@@ -13,11 +13,11 @@ const div = document.querySelector('div')
 const button = document.querySelector('button')
 
 div.addEventListener('click', (e) => {
-  console.log('Catch a click on the div', e)
+  console.log('Catch a click on the div')
 })
 
 button.addEventListener('click', (e) => {
-  console.log('Catch a click on the button', e)
+  console.log('Catch a click on the button')
 })
 
 button.click()
@@ -41,11 +41,11 @@ const div = document.querySelector('div')
 const button = document.querySelector('button')
 
 div.addEventListener('click', (e) => {
-  console.log('The event will be never fired', e)
+  console.log('The event will be never fired')
 })
 
 button.addEventListener('click', withoutPropagation((e) => {
-  console.log('Catch a click on the button only', e)
+  console.log('Catch a click on the button only')
 }))
 
 button.click()
